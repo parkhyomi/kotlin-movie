@@ -1,5 +1,6 @@
-package domain.model.schedule
+package view
 
+import domain.model.screen.ScreeningTemplate
 import java.time.LocalDate
 import java.time.LocalTime
 

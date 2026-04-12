@@ -1,8 +1,8 @@
 package controller
 
 import domain.model.Movie
-import domain.model.schedule.ScreeningSchedule
-import domain.model.schedule.defaultScreeningSeeds
+import domain.model.screen.ScreeningSchedule
+import view.defaultScreeningSeeds
 import domain.model.screen.Screening
 import domain.model.seat.SeatAvailability
 import domain.parseSeats
@@ -10,7 +10,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 // 영화관 전체 도메인 조합 객체
-class CinemaController(
+class ScreenController(
     // 스케줄 상영 기간 (예: 4/6 ~ 4/13)
     private val screeningPeriodStart: LocalDate = LocalDate.of(2026, 4, 6),
     private val screeningPeriodEnd: LocalDate = LocalDate.of(2026, 4, 13),

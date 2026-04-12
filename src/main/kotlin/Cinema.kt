@@ -1,4 +1,4 @@
-import controller.CinemaController
+import controller.ScreenController
 import controller.PaymentController
 import controller.ReservationController
 import domain.model.payment.PaymentMethod
@@ -12,7 +12,7 @@ private data class ReservedSelection(
 )
 
 fun cinema() {
-    val cinemaController = CinemaController()
+    val screenController = ScreenController()
     val reservationController = ReservationController()
     val paymentController = PaymentController()
 
@@ -24,22 +24,22 @@ fun cinema() {
 
     while (true) {
         // 영화 제목을 입력 받고 해당 제목 영화의 상영 목록
-        val title = readMovieTitle(cinemaController)
+        val title = readMovieTitle(screenController)
 
         // 영화 날짜를 입력 받고 제목으로 필터링 된 리스트 중 해당 날짜 리스트 반환
-        val screeningDate = readScreeningDate(cinemaController, title)
-        val screenings = cinemaController.findScreeningsDate(cinemaController.findScreeningTitle(title), screeningDate)
+        val screeningDate = readScreeningDate(screenController, title)
+        val screenings = screenController.findScreeningsDate(screenController.findScreeningTitle(title), screeningDate)
 
         // 상영 시간을 선택한다. 장바구니 내 기존 예약과 시간이 겹치면 재선택한다.
         val selectedScreening = readScreeningWithOverlapCheck(screenings, reservationController)
 
         // 사용자가 고른 상영의 좌석 배치도를 출력한다.
-        val seatStatuses = cinemaController.findSeatStatuses(title, screeningDate, selectedScreening.startTime)
+        val seatStatuses = screenController.findSeatStatuses(title, screeningDate, selectedScreening.startTime)
         println("좌석 배치도")
         SeatLayoutView.render(seatStatuses)
 
         // 좌석 입력을 받아 실제 예약한다.
-        val reserved = reserveSeatsForSelection(cinemaController, selectedScreening, title, screeningDate)
+        val reserved = reserveSeatsForSelection(screenController, selectedScreening, title, screeningDate)
         val item = reservationController.reserve(reserved.screening, reserved.seatCodes)
 
         println()
@@ -108,7 +108,7 @@ private fun readYesNo(): Boolean {
 }
 
 // 존재하는 상영 제목을 입력 받을 때까지 반복한다.
-private fun readMovieTitle(cinemaController: CinemaController): String {
+private fun readMovieTitle(screenController: ScreenController): String {
     while (true) {
         println("예매할 영화 제목을 입력하세요:")
         val title = readln().trim()
@@ -118,7 +118,7 @@ private fun readMovieTitle(cinemaController: CinemaController): String {
             continue
         }
 
-        if (cinemaController.findScreeningTitle(title).isEmpty()) {
+        if (screenController.findScreeningTitle(title).isEmpty()) {
             println("해당 제목의 상영이 없습니다. 다시 입력해 주세요.")
             continue
         }
@@ -129,7 +129,7 @@ private fun readMovieTitle(cinemaController: CinemaController): String {
 
 // 해당 영화에 상영이 있는 날짜를 입력 받을 때까지 반복한다.
 private fun readScreeningDate(
-    cinemaController: CinemaController,
+    screenController: ScreenController,
     movieTitle: String,
 ): LocalDate {
     while (true) {
@@ -142,7 +142,7 @@ private fun readScreeningDate(
             continue
         }
 
-        val screenings = cinemaController.findScreeningsDate(cinemaController.findScreeningTitle(movieTitle), date)
+        val screenings = screenController.findScreeningsDate(screenController.findScreeningTitle(movieTitle), date)
         if (screenings.isEmpty()) {
             println("해당 날짜에는 상영이 없습니다. 다른 날짜를 입력해 주세요.")
             continue
@@ -199,7 +199,7 @@ private fun readScreeningIndex(maxIndex: Int): Int {
 
 // 좌석 입력을 받아 선택한 상영에 예약을 반영한다.
 private fun reserveSeatsForSelection(
-    cinemaController: CinemaController,
+    screenController: ScreenController,
     screening: Screening,
     movieTitle: String,
     screeningDate: LocalDate,
@@ -209,7 +209,7 @@ private fun reserveSeatsForSelection(
         val seatCodes = readSeatCodes()
 
         val result =
-            cinemaController.reserveSeats(
+            screenController.reserveSeats(
                 movieTitle = movieTitle,
                 date = screeningDate,
                 startTime = screening.startTime,
