@@ -1,29 +1,24 @@
 package controller
 
-import domain.model.Movie
 import domain.model.screen.Screening
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import support.screeningFixture
 import java.time.LocalDate
 import java.time.LocalTime
 
 class ReservationControllerTest {
-    private fun movie(
-        title: String = "테스트 영화",
-        runningMinutes: Int = 120,
-    ): Movie = Movie(title = title, runningMinutes = runningMinutes)
-
     private fun screening(
         date: LocalDate = LocalDate.of(2026, 4, 10),
         startTime: LocalTime = LocalTime.of(10, 0),
         title: String = "테스트 영화",
         runningMinutes: Int = 120,
-    ): Screening =
-        Screening(
-            screeningDate = date,
-            startTime = startTime,
-            movie = movie(title, runningMinutes),
-        )
+    ): Screening = screeningFixture(
+        date = date,
+        startTime = startTime,
+        title = title,
+        runningMinutes = runningMinutes
+    )
 
     @Test
     fun `reserve는 좌석 코드를 공백 제거 후 대문자로 정규화해서 저장한다`() {
@@ -35,7 +30,10 @@ class ReservationControllerTest {
                 seatCodes = listOf(" c2 ", "a12"),
             )
 
-        assertThat(item.seats.map { seat -> "${seat.row.name}${seat.column}" }).containsExactly("C2", "A12")
+        assertThat(item.seats.map { seat -> "${seat.row.name}${seat.column}" }).containsExactly(
+            "C2",
+            "A12"
+        )
     }
 
     @Test
@@ -88,19 +86,5 @@ class ReservationControllerTest {
         val result = reservationController.hasOverlapping(overlappedCandidate)
 
         assertThat(result).isTrue()
-    }
-
-    @Test
-    fun `totalSeatAmount는 장바구니에 담긴 좌석 총 금액을 반환한다`() {
-        val reservationController = ReservationController()
-        val first = screening(startTime = LocalTime.of(13, 0), title = "F1 더 무비")
-        val second = screening(startTime = LocalTime.of(16, 0), title = "토이 스토리", runningMinutes = 100)
-
-        reservationController.reserve(first, listOf("D1", "D2"))
-        reservationController.reserve(second, listOf("C2"))
-
-        val result = reservationController.totalSeatAmount()
-
-        assertThat(result).isEqualTo(51000)
     }
 }

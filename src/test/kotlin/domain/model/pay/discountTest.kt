@@ -1,23 +1,20 @@
 package domain.model.pay
 
-import domain.model.Movie
 import domain.model.payment.Discount
-import domain.model.screen.Screening
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalTime
+import support.screeningFixture
 
 class DiscountTest {
     private fun screening(
         day: Int,
         startTime: LocalTime,
-    ): Screening =
-        Screening(
-            screeningDate = LocalDate.of(2026, 4, day),
-            startTime = startTime,
-            movie = Movie(title = "테스트 영화", runningMinutes = 120),
-        )
+    ) = screeningFixture(
+        date = LocalDate.of(2026, 4, day),
+        startTime = startTime,
+    )
 
     @Test
     fun `무비데이만 적용되면 10퍼센트 할인된다`() {

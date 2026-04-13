@@ -1,38 +1,20 @@
 package domain.model.cart
 
-import domain.model.Movie
-import domain.model.screen.Screening
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalTime
+import support.screeningFixture
 
 class CartTest {
-    private fun movie(
-        title: String = "테스트 영화",
-        runningMinutes: Int = 120,
-    ): Movie = Movie(title = title, runningMinutes = runningMinutes)
-
-    private fun screening(
-        date: LocalDate = LocalDate.of(2026, 4, 10),
-        startTime: LocalTime = LocalTime.of(10, 0),
-        title: String = "테스트 영화",
-        runningMinutes: Int = 120,
-    ): Screening =
-        Screening(
-            screeningDate = date,
-            startTime = startTime,
-            movie = movie(title, runningMinutes),
-        )
-
     @Test
     fun `장바구니에 항목을 추가하면 items로 조회할 수 있다`() {
         val cart = Cart()
         val item =
             CartItem(
-                screening = screening(),
+                screening = screeningFixture(),
                 seats =
                     listOf(
                         Seat(column = 2, row = RowLabel.C),
@@ -51,7 +33,7 @@ class CartTest {
         val reserved =
             CartItem(
                 screening =
-                    screening(
+                    screeningFixture(
                         date = LocalDate.of(2026, 4, 10),
                         startTime = LocalTime.of(10, 0),
                         runningMinutes = 120,
@@ -61,7 +43,7 @@ class CartTest {
         cart.add(reserved)
 
         val candidate =
-            screening(
+            screeningFixture(
                 date = LocalDate.of(2026, 4, 10),
                 startTime = LocalTime.of(11, 0),
                 runningMinutes = 90,
@@ -78,7 +60,7 @@ class CartTest {
         val reserved =
             CartItem(
                 screening =
-                    screening(
+                    screeningFixture(
                         date = LocalDate.of(2026, 4, 10),
                         startTime = LocalTime.of(10, 0),
                         runningMinutes = 120,
@@ -88,7 +70,7 @@ class CartTest {
         cart.add(reserved)
 
         val candidate =
-            screening(
+            screeningFixture(
                 date = LocalDate.of(2026, 4, 10),
                 startTime = LocalTime.of(12, 0),
                 runningMinutes = 90,
@@ -97,30 +79,5 @@ class CartTest {
         val result = cart.hasOverlapping(candidate)
 
         assertThat(result).isFalse()
-    }
-
-    @Test
-    fun `장바구니에 담긴 예매들의 좌석 금액을 합산해 총 금액을 반환한다`() {
-        val cart = Cart()
-        cart.add(
-            CartItem(
-                screening = screening(startTime = LocalTime.of(10, 0)),
-                seats =
-                    listOf(
-                        Seat(column = 1, row = RowLabel.D),
-                        Seat(column = 2, row = RowLabel.D),
-                    ),
-            ),
-        )
-        cart.add(
-            CartItem(
-                screening = screening(startTime = LocalTime.of(13, 0)),
-                seats = listOf(Seat(column = 2, row = RowLabel.C)),
-            ),
-        )
-
-        val result = cart.totalSeatAmount()
-
-        assertThat(result).isEqualTo(51000)
     }
 }

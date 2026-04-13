@@ -12,7 +12,7 @@ class SeatAvailabilityTest {
         val targetSeat = Seat(3, RowLabel.A)
         val result = seatAvailability.isSeat(targetSeat)
 
-        assertThat(result).isEqualTo(true)
+        assertThat(result).isTrue()
     }
 
     @Test
@@ -20,14 +20,14 @@ class SeatAvailabilityTest {
         val targetSeat = Seat(7, RowLabel.A)
         val result = seatAvailability.isSeat(targetSeat)
 
-        assertThat(result).isEqualTo(false)
+        assertThat(result).isFalse()
     }
 
     @Test
     fun `선택한 좌석이 예약이 가능하다면 true를 반환한다`() {
         val result = seatAvailability.isAvailable()
 
-        assertThat(result).isEqualTo(true)
+        assertThat(result).isTrue()
     }
 
     @Test
@@ -36,7 +36,7 @@ class SeatAvailabilityTest {
 
         val result = seatAvailability.isAvailable()
 
-        assertThat(result).isEqualTo(false)
+        assertThat(result).isFalse()
     }
 
     @Test

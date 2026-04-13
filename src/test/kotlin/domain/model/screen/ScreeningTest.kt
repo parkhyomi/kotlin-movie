@@ -3,6 +3,7 @@ package domain.model.screen
 import domain.model.Movie
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat
+import domain.model.seat.SeatStatus
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -24,6 +25,15 @@ class ScreeningTest {
         title: String,
         runningMinutes: Int,
     ): Movie = Movie(title = title, runningMinutes = runningMinutes)
+
+    private fun seatStatusOf(
+        screening: Screening,
+        targetSeat: Seat,
+    ): SeatStatus =
+        screening
+            .seatStatuses()
+            .first { seatAvailability -> seatAvailability.isSeat(targetSeat) }
+            .status
 
     @Test
     fun `종료 시각은 시작 시각 + 영화 러닝타임으로 계산된다`() {
@@ -92,7 +102,7 @@ class ScreeningTest {
         val reserved = screening().reserveAll(targetSeats)
 
         targetSeats.forEach { targetSeat ->
-            Assertions.assertThat(reserved.isAvailable(targetSeat)).isFalse
+            Assertions.assertThat(seatStatusOf(reserved, targetSeat)).isEqualTo(SeatStatus.RESERVED)
         }
     }
 
@@ -105,9 +115,10 @@ class ScreeningTest {
         val reserved = screening.reserveAll(targetSeats)
 
         targetSeats.forEach { targetSeat ->
-            Assertions.assertThat(reserved.isAvailable(targetSeat)).isFalse()
+            Assertions.assertThat(seatStatusOf(reserved, targetSeat)).isEqualTo(SeatStatus.RESERVED)
         }
-        Assertions.assertThat(reserved.isAvailable(untouchedSeat)).isTrue()
+        Assertions.assertThat(seatStatusOf(reserved, untouchedSeat)).isEqualTo(SeatStatus.AVAILABLE)
+
     }
 
     @Test

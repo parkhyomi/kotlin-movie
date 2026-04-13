@@ -1,34 +1,16 @@
 package controller
 
-import domain.model.Movie
 import domain.model.cart.CartItem
 import domain.model.payment.PaymentMethod
-import domain.model.screen.Screening
 import domain.model.seat.RowLabel
-import domain.model.seat.Seat
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalTime
+import support.screeningFixture
+import support.seatFixture
 
 class PaymentControllerTest {
-    private fun screening(
-        date: LocalDate,
-        startTime: LocalTime,
-        title: String = "테스트 영화",
-        runningMinutes: Int = 120,
-    ): Screening =
-        Screening(
-            screeningDate = date,
-            startTime = startTime,
-            movie = Movie(title = title, runningMinutes = runningMinutes),
-        )
-
-    private fun seat(
-        row: RowLabel,
-        column: Int,
-    ): Seat = Seat(column = column, row = row)
-
     @Test
     fun `결제는 예매별 할인 후 합산하고 포인트 차감 뒤 카드 할인을 적용한다`() {
         val paymentController = PaymentController()
@@ -39,30 +21,30 @@ class PaymentControllerTest {
             listOf(
                 CartItem(
                     screening =
-                        screening(
+                        screeningFixture(
                             date = LocalDate.of(2025, 9, 20),
                             startTime = LocalTime.of(13, 0),
                             title = "F1 더 무비",
                         ),
-                    seats = listOf(seat(RowLabel.D, 1), seat(RowLabel.D, 2)),
+                    seats = listOf(seatFixture(RowLabel.D, 1), seatFixture(RowLabel.D, 2)),
                 ),
                 CartItem(
                     screening =
-                        screening(
+                        screeningFixture(
                             date = LocalDate.of(2025, 9, 20),
                             startTime = LocalTime.of(16, 0),
                             title = "토이 스토리",
                         ),
-                    seats = listOf(seat(RowLabel.C, 2)),
+                    seats = listOf(seatFixture(RowLabel.C, 2)),
                 ),
                 CartItem(
                     screening =
-                        screening(
+                        screeningFixture(
                             date = LocalDate.of(2025, 9, 20),
                             startTime = LocalTime.of(9, 50),
                             title = "아이언맨",
                         ),
-                    seats = listOf(seat(RowLabel.A, 1)),
+                    seats = listOf(seatFixture(RowLabel.A, 1)),
                 ),
             )
 
@@ -81,30 +63,30 @@ class PaymentControllerTest {
             listOf(
                 CartItem(
                     screening =
-                        screening(
+                        screeningFixture(
                             date = LocalDate.of(2026, 4, 6),
                             startTime = LocalTime.of(13, 0),
                             title = "마더",
                         ),
-                    seats = listOf(seat(RowLabel.A, 9)),
+                    seats = listOf(seatFixture(RowLabel.A, 9)),
                 ),
                 CartItem(
                     screening =
-                        screening(
+                        screeningFixture(
                             date = LocalDate.of(2026, 4, 7),
                             startTime = LocalTime.of(10, 0),
                             title = "탑건: 매버릭",
                         ),
-                    seats = listOf(seat(RowLabel.E, 1)),
+                    seats = listOf(seatFixture(RowLabel.E, 1)),
                 ),
                 CartItem(
                     screening =
-                        screening(
+                        screeningFixture(
                             date = LocalDate.of(2026, 4, 10),
                             startTime = LocalTime.of(16, 0),
                             title = "체인소맨",
                         ),
-                    seats = listOf(seat(RowLabel.C, 8)),
+                    seats = listOf(seatFixture(RowLabel.C, 8)),
                 ),
             )
 
@@ -122,16 +104,16 @@ class PaymentControllerTest {
         val items =
             listOf(
                 CartItem(
-                    screening = screening(LocalDate.of(2026, 4, 6), LocalTime.of(13, 0), "마더"),
-                    seats = listOf(seat(RowLabel.A, 9)),
+                    screening = screeningFixture(LocalDate.of(2026, 4, 6), LocalTime.of(13, 0), "마더"),
+                    seats = listOf(seatFixture(RowLabel.A, 9)),
                 ),
                 CartItem(
-                    screening = screening(LocalDate.of(2026, 4, 7), LocalTime.of(10, 0), "탑건: 매버릭"),
-                    seats = listOf(seat(RowLabel.E, 1)),
+                    screening = screeningFixture(LocalDate.of(2026, 4, 7), LocalTime.of(10, 0), "탑건: 매버릭"),
+                    seats = listOf(seatFixture(RowLabel.E, 1)),
                 ),
                 CartItem(
-                    screening = screening(LocalDate.of(2026, 4, 10), LocalTime.of(16, 0), "체인소맨"),
-                    seats = listOf(seat(RowLabel.C, 8)),
+                    screening = screeningFixture(LocalDate.of(2026, 4, 10), LocalTime.of(16, 0), "체인소맨"),
+                    seats = listOf(seatFixture(RowLabel.C, 8)),
                 ),
             )
 
@@ -149,8 +131,8 @@ class PaymentControllerTest {
         val items =
             listOf(
                 CartItem(
-                    screening = screening(LocalDate.of(2026, 4, 7), LocalTime.of(13, 0), "단일 예매"),
-                    seats = listOf(seat(RowLabel.A, 1)),
+                    screening = screeningFixture(LocalDate.of(2026, 4, 7), LocalTime.of(13, 0), "단일 예매"),
+                    seats = listOf(seatFixture(RowLabel.A, 1)),
                 ),
             )
 

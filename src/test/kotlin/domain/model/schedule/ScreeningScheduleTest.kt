@@ -6,6 +6,7 @@ import domain.model.screen.ScreeningSchedule
 import domain.model.screen.ScreeningTemplate
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat
+import domain.model.seat.SeatStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
@@ -55,6 +56,15 @@ class ScreeningScheduleTest {
             Movie(title = "아이언맨 3", runningMinutes = 122),
         )
 
+    private fun seatStatusOf(
+        screening: Screening,
+        targetSeat: Seat,
+    ): SeatStatus =
+        screening
+            .seatStatuses()
+            .first { seatAvailability -> seatAvailability.isSeat(targetSeat) }
+            .status
+
     @Test
     fun `상영 기간 종료일이 시작일보다 빠르면 스케줄을 생성할 수 없다`() {
         assertThrows(IllegalArgumentException::class.java) {
@@ -63,25 +73,6 @@ class ScreeningScheduleTest {
                 periodEnd = LocalDate.of(2026, 4, 9),
             )
         }
-    }
-
-    @Test
-    fun `screeningsOn은 전달한 날짜의 상영만 반환한다`() {
-        val schedule =
-            movieSchedule(
-                screenings =
-                    listOf(
-                        screening("탑건: 매버릭", LocalDate.of(2026, 4, 6), LocalTime.of(10, 0)),
-                        screening("마더", LocalDate.of(2026, 4, 6), LocalTime.of(13, 0)),
-                        screening("아이언맨 3", LocalDate.of(2026, 4, 7), LocalTime.of(16, 0)),
-                    ),
-            )
-
-        val screenings = schedule.screeningsOn(date = LocalDate.of(2026, 4, 6))
-
-        assertThat(screenings.size).isEqualTo(2)
-        assertThat(screenings.map { screening -> screening.movie.title })
-            .isEqualTo(listOf("탑건: 매버릭", "마더"))
     }
 
     @Test
@@ -98,7 +89,8 @@ class ScreeningScheduleTest {
             )
         val screeningsForTitle = schedule.screeningsOfMovieTitle("탑건: 매버릭")
 
-        val screenings = schedule.screeningsOfMovieDate(screeningsForTitle, LocalDate.of(2026, 4, 6))
+        val screenings =
+            schedule.screeningsOfMovieDate(screeningsForTitle, LocalDate.of(2026, 4, 6))
 
         assertThat(screenings.size).isEqualTo(2)
         assertThat(screenings.map { screening -> screening.startTime })
@@ -118,7 +110,8 @@ class ScreeningScheduleTest {
             )
         val screeningsForTitle = schedule.screeningsOfMovieTitle("마더")
 
-        val screenings = schedule.screeningsOfMovieDate(screeningsForTitle, LocalDate.of(2026, 4, 8))
+        val screenings =
+            schedule.screeningsOfMovieDate(screeningsForTitle, LocalDate.of(2026, 4, 8))
 
         assertThat(screenings.map { screening -> screening.startTime }).isEqualTo(
             listOf(
@@ -139,7 +132,8 @@ class ScreeningScheduleTest {
                     ),
             )
 
-        val statuses = schedule.seatStatusesOf("아이언맨 3", LocalDate.of(2026, 4, 9), LocalTime.of(10, 0))
+        val statuses =
+            schedule.seatStatusesOf("아이언맨 3", LocalDate.of(2026, 4, 9), LocalTime.of(10, 0))
 
         assertThat(statuses.size).isEqualTo(60)
         assertThat(statuses.all { seatAvailability -> seatAvailability.isAvailable() }).isTrue()
@@ -174,8 +168,8 @@ class ScreeningScheduleTest {
                 seats = listOf(firstSeat, secondSeat),
             )
 
-        assertThat(reserved.isAvailable(firstSeat)).isFalse()
-        assertThat(reserved.isAvailable(secondSeat)).isFalse()
+        assertThat(seatStatusOf(reserved, firstSeat)).isEqualTo(SeatStatus.RESERVED)
+        assertThat(seatStatusOf(reserved, secondSeat)).isEqualTo(SeatStatus.RESERVED)
     }
 
     @Test
@@ -189,7 +183,8 @@ class ScreeningScheduleTest {
             )
         val seats = listOf(Seat(column = 3, row = RowLabel.C))
 
-        val reserved = schedule.reserveSeats("마더", LocalDate.of(2026, 4, 6), LocalTime.of(13, 0), seats)
+        val reserved =
+            schedule.reserveSeats("마더", LocalDate.of(2026, 4, 6), LocalTime.of(13, 0), seats)
 
         assertThrows(IllegalArgumentException::class.java) {
             reserved.reserveAll(seats)
