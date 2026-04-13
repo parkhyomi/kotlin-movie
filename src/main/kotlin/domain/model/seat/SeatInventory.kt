@@ -5,7 +5,7 @@ data class SeatInventory(
     private val seats: List<SeatAvailability>,
 ) {
     // 원하는 좌석을 받았을 때 -> 예약이 되는지 안되는지
-    fun isAvailable(targetSeat: Seat): Boolean =
+    private fun isAvailable(targetSeat: Seat): Boolean =
         seats.any { seatAvailability ->
             seatAvailability.isSeat(targetSeat) && seatAvailability.isAvailable()
         }

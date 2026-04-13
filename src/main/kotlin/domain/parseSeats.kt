@@ -13,7 +13,7 @@ fun parseSeats(seatCodes: List<String>): List<Seat> =
         }
 
 // 좌석 코드 하나를 파싱한다. (알파벳 1글자 + 숫자 1자리 이상)
-fun parseSeatCode(code: String): Seat {
+private fun parseSeatCode(code: String): Seat {
     val value = code.trim().uppercase()
     require(value.isNotBlank()) { "좌석 값이 비어 있습니다." }
 
