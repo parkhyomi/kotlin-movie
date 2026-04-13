@@ -24,12 +24,6 @@ class ScreeningSchedule(
         require(!screeningPeriodEnd.isBefore(screeningPeriodStart)) { "상영 기간 종료일은 시작일보다 빠를 수 없습니다." }
     }
 
-    // 스케줄의 리스트 (일주일치) 상영 정보를 토대로 -> 날짜별 스크린리스트
-    fun screeningsOn(date: LocalDate): List<Screening> =
-        screenings.filter { screening ->
-            screening.isOn(date)
-        }
-
     // 제목을 입력받고 -> 스크린 리스트 중 해당 제목의 스크린 리스트
     fun screeningsOfMovieTitle(movieTitle: String): List<Screening> =
         screenings.filter { screening ->

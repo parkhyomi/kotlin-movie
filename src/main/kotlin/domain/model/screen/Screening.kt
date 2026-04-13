@@ -50,9 +50,6 @@ data class Screening(
         return !(endTime <= other.startTime || startTime >= other.endTime)
     }
 
-    // 좌석을 입력했을 때, 예약을 할 수 있는지 판단하는 함수
-    fun isAvailable(targetSeat: Seat): Boolean = seatInventory.isAvailable(targetSeat)
-
     // 좌석 1개를 예약상태 변경하고, 새 상영 객체를 반환한다.
     private fun reserve(targetSeat: Seat): Screening = copy(seatInventory = seatInventory.reserve(targetSeat))
 }

@@ -20,10 +20,4 @@ class Cart(
         items.any { item ->
             item.screening.overlapsWith(screening)
         }
-
-    // 장바구니에 담긴 예매들의 좌석 금액 총합을 계산한다.
-    fun totalSeatAmount(): Int =
-        items.sumOf { item ->
-            item.seatAmount()
-        }
 }
