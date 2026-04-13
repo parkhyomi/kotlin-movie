@@ -4,6 +4,7 @@ import domain.model.cart.Cart
 import domain.model.cart.CartItem
 import domain.model.screen.Screening
 import domain.parseSeats
+import view.ReservationFormatter
 
 class ReservationController(
     private val cart: Cart = Cart(),
@@ -25,7 +26,7 @@ class ReservationController(
     // 예약 리스트별 제목, 날짜, 시작시간, 좌석 추출하기
     fun reservationSummaries(): List<String> =
         cart.items().map { item ->
-            item.displayLine()
+            ReservationFormatter.format(item)
         }
 
     // 사용자가 고른 상영 시간이 기존 장바구니와 겹치는지 확인한다.

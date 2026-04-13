@@ -1,10 +1,11 @@
-import controller.ScreenController
 import controller.PaymentController
 import controller.ReservationController
+import controller.ScreenController
 import domain.model.payment.PaymentMethod
 import domain.model.screen.Screening
-import view.SeatLayoutView
 import java.time.LocalDate
+import view.ReservationFormatter
+import view.SeatLayoutView
 
 private data class ReservedSelection(
     val screening: Screening,
@@ -44,7 +45,7 @@ fun cinema() {
 
         println()
         println("장바구니에 추가됨")
-        println(item.displayLine())
+        println(ReservationFormatter.format(item))
         println()
 
         println("다른 영화를 추가하시겠습니까? (Y/N)")
