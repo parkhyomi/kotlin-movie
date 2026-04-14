@@ -1,7 +1,7 @@
 import controller.PaymentController
 import controller.ReservationController
 import controller.ScreenController
-import domain.model.payment.PaymentMethod
+import domain.model.payment.policy.PaymentMethod
 import domain.model.screen.Screening
 import java.time.LocalDate
 import view.ReservationFormatter
