@@ -1,5 +1,8 @@
 package domain.model.payment
 
+import domain.model.payment.policy.PayMethodPolicy
+import domain.model.payment.policy.PaymentMethod
+
 data class Pay(
     private val point: Int,
     private val paymentMethod: PaymentMethod,
@@ -8,21 +11,11 @@ data class Pay(
         require(point >= 0) { "포인트는 0 이상이어야 합니다." }
     }
 
-    fun payAmountApply(payAmount: Int): Int {
-        val pointAppliedAmount = applyPoint(payAmount).coerceAtLeast(0)
-        val discountAmount = paymentMethodDiscountAmount(pointAppliedAmount)
+    private val payMethodPolicy = PayMethodPolicy()
 
-        return (pointAppliedAmount - discountAmount).coerceAtLeast(0)
+    fun payAmountApply(payAmount: Int): Int {
+        val amount = payAmount - point
+        return payMethodPolicy.payAmountApply(amount, paymentMethod).coerceAtLeast(0)
     }
 
-    private fun applyPoint(payAmount: Int): Int = payAmount - point
-
-    private fun paymentMethodDiscountAmount(payAmount: Int): Int = (payAmount * paymentMethod.discountRate).toInt()
-}
-
-enum class PaymentMethod(
-    val discountRate: Double,
-) {
-    CARD(0.05),
-    CASH(0.02),
 }
