@@ -1,7 +1,7 @@
 package domain.model.pay
 
 import domain.model.payment.Pay
-import domain.model.payment.PaymentMethod
+import domain.model.payment.policy.PaymentMethod
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
