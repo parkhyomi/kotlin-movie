@@ -14,7 +14,7 @@ data class Screening(
     // 해당 날짜의 시작 상영 시각 (예: 12:00)
     val startTime: LocalTime,
     val movie: Movie,
-    private val seatInventory: SeatInventory = SeatInventory(SeatInventory.Companion.defaultSeatAvailabilities()),
+    private val seatInventory: SeatInventory = SeatInventory(SeatInventory.defaultSeatAvailabilities()),
 ) {
     // 종료 시각은 영화 러닝타임으로 계산한다. (예: 12:00 + 120분 = 14:00)
     val endTime: LocalTime = startTime.plusMinutes(movie.runningMinutes.toLong())
