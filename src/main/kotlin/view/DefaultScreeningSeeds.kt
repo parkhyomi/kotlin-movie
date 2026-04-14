@@ -1,6 +1,6 @@
 package view
 
-import domain.model.screen.ScreeningTemplate
+import view.ScreeningTemplate
 import java.time.LocalDate
 import java.time.LocalTime
 
