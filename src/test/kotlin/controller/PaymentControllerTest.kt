@@ -11,15 +11,6 @@ import support.screeningFixture
 import support.seatFixture
 
 class PaymentControllerTest {
-    private fun paymentController(
-        point: Int,
-        paymentMethod: PaymentMethod,
-    ): PaymentController =
-        PaymentController().apply {
-            usePoint(point)
-            selectPaymentMethod(paymentMethod)
-        }
-
     private fun item(
         date: LocalDate,
         startTime: LocalTime,
@@ -64,7 +55,7 @@ class PaymentControllerTest {
 
     @Test
     fun `결제는 예매별 할인 후 합산하고 포인트 차감 뒤 카드 할인을 적용한다`() {
-        val paymentController = paymentController(point = 2_000, paymentMethod = PaymentMethod.CARD)
+        val paymentController = PaymentController()
 
         val items =
             listOf(
@@ -97,34 +88,49 @@ class PaymentControllerTest {
                 ),
             )
 
-        val result = paymentController.payAmountApply(items)
+        val result =
+            paymentController.payAmountApply(
+                items = items,
+                point = 2_000,
+                paymentMethod = PaymentMethod.CARD,
+            )
 
         assertThat(result).isEqualTo(50_065)
     }
 
     @Test
     fun `현재 샘플 입력 시나리오는 최종 결제 금액 38950원을 반환한다`() {
-        val paymentController = paymentController(point = 500, paymentMethod = PaymentMethod.CARD)
+        val paymentController = PaymentController()
         val items = sampleItemsForPricingScenario()
 
-        val result = paymentController.payAmountApply(items)
+        val result =
+            paymentController.payAmountApply(
+                items = items,
+                point = 500,
+                paymentMethod = PaymentMethod.CARD,
+            )
 
         assertThat(result).isEqualTo(38_950)
     }
 
     @Test
     fun `카드 대신 현금을 선택하면 현금 할인률로 계산된다`() {
-        val paymentController = paymentController(point = 500, paymentMethod = PaymentMethod.CASH)
+        val paymentController = PaymentController()
         val items = sampleItemsForPricingScenario()
 
-        val result = paymentController.payAmountApply(items)
+        val result =
+            paymentController.payAmountApply(
+                items = items,
+                point = 500,
+                paymentMethod = PaymentMethod.CASH,
+            )
 
         assertThat(result).isEqualTo(40_180)
     }
 
     @Test
     fun `포인트가 할인 적용 후 합계보다 크면 최종 결제 금액은 0원이다`() {
-        val paymentController = paymentController(point = 100_000, paymentMethod = PaymentMethod.CARD)
+        val paymentController = PaymentController()
 
         val items =
             listOf(
@@ -134,7 +140,12 @@ class PaymentControllerTest {
                 ),
             )
 
-        val result = paymentController.payAmountApply(items)
+        val result =
+            paymentController.payAmountApply(
+                items = items,
+                point = 100_000,
+                paymentMethod = PaymentMethod.CARD,
+            )
 
         assertThat(result).isEqualTo(0)
     }
