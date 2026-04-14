@@ -5,8 +5,8 @@ import domain.model.screen.Screening
 class MovieDayDiscountPolicy(
     private val movieDays: Set<Int> = setOf(10, 20, 30),
     private val discountPercent: Int = 10,
-) {
-    fun apply(
+) : DiscountPolicy {
+    override fun apply(
         amount: Int,
         screening: Screening,
     ): Int {

@@ -7,8 +7,8 @@ class TimeDiscountPolicy(
     private val morningCutoff: LocalTime = LocalTime.of(11, 0),
     private val nightCutoff: LocalTime = LocalTime.of(20, 0),
     private val discountAmount: Int = 2_000,
-) {
-    fun apply(
+) : DiscountPolicy {
+    override fun apply(
         amount: Int,
         screening: Screening,
     ): Int {
