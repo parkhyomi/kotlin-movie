@@ -1,21 +1,29 @@
 package domain.model.payment
 
 import domain.model.payment.policy.MovieDayDiscountPolicy
+import domain.model.payment.policy.DiscountPolicy
 import domain.model.payment.policy.TimeDiscountPolicy
 import domain.model.screen.Screening
 
-data class Discount(
-    private val screening: Screening? = null,
-) {
-    private val movieDayDiscountPolicy: MovieDayDiscountPolicy = MovieDayDiscountPolicy()
-    private val timeDiscountPolicy: TimeDiscountPolicy = TimeDiscountPolicy()
+class Discount {
+    private val policies: List<DiscountPolicy> =
+        listOf(
+            MovieDayDiscountPolicy(),
+            TimeDiscountPolicy(),
+        )
 
-    fun discountAmountApply(discountAmount: Int): Int {
-        val source = screening ?: return discountAmount
-        val movieDayDiscountApplied = movieDayDiscountPolicy.apply(discountAmount, source)
+    fun discountAmountApply(
+        amount: Int,
+        screening: Screening,
+    ): Int = normalizeNonNegative(applyPolicies(amount, screening))
 
-        return timeDiscountPolicy
-            .apply(movieDayDiscountApplied, source)
-            .coerceAtLeast(0)
-    }
+    private fun applyPolicies(
+        amount: Int,
+        screening: Screening,
+    ): Int =
+        policies.fold(amount) { currentAmount, policy ->
+            policy.apply(currentAmount, screening)
+        }
+
+    private fun normalizeNonNegative(amount: Int): Int = amount.coerceAtLeast(0)
 }
