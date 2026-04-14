@@ -68,11 +68,14 @@ fun cinema() {
     println("1. 신용카드")
     println("2. 현금")
     val paymentMethod = PaymentMethod.entries[readln().trim().toInt() - 1]
-    paymentController.usePoint(point)
-    paymentController.selectPaymentMethod(paymentMethod)
 
     println("가격계산")
-    val resultPrice = paymentController.payAmountApply(reservationController.reservationItems())
+    val resultPrice =
+        paymentController.payAmountApply(
+            items = reservationController.reservationItems(),
+            point = point,
+            paymentMethod = paymentMethod,
+        )
     println("최종 결제 금액: $resultPrice")
 
     println("위 금액으로 결제하시겠습니까? (Y/N)")
