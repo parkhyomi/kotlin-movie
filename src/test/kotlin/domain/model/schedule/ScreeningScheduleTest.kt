@@ -1,9 +1,9 @@
 package domain.model.schedule
 
 import domain.model.Movie
-import domain.model.screen.Screening
-import domain.model.screen.ScreeningSchedule
-import domain.model.screen.ScreeningTemplate
+import domain.model.ScreeningSchedule.Screening
+import domain.model.ScreeningSchedule.ScreeningSchedule
+import view.ScreeningTemplate
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat
 import domain.model.seat.SeatStatus

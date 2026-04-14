@@ -1,4 +1,4 @@
-package domain.model.screen
+package domain.model.ScreeningSchedule
 
 import domain.model.Movie
 import domain.model.seat.RowLabel

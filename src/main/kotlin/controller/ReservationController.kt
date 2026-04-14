@@ -2,7 +2,7 @@ package controller
 
 import domain.model.cart.Cart
 import domain.model.cart.CartItem
-import domain.model.screen.Screening
+import domain.model.ScreeningSchedule.Screening
 import domain.parseSeats
 import view.ReservationFormatter
 

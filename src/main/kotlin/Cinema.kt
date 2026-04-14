@@ -2,7 +2,7 @@ import controller.PaymentController
 import controller.ReservationController
 import controller.ScreenController
 import domain.model.payment.policy.PaymentMethod
-import domain.model.screen.Screening
+import domain.model.ScreeningSchedule.Screening
 import java.time.LocalDate
 import view.ReservationFormatter
 import view.SeatLayoutView
@@ -29,7 +29,7 @@ fun cinema() {
 
         // 영화 날짜를 입력 받고 제목으로 필터링 된 리스트 중 해당 날짜 리스트 반환
         val screeningDate = readScreeningDate(screenController, title)
-        val screenings = screenController.findScreeningsDate(screenController.findScreeningTitle(title), screeningDate)
+        val screenings = screenController.findScreenings(title, screeningDate)
 
         // 상영 시간을 선택한다. 장바구니 내 기존 예약과 시간이 겹치면 재선택한다.
         val selectedScreening = readScreeningWithOverlapCheck(screenings, reservationController)
@@ -143,7 +143,7 @@ private fun readScreeningDate(
             continue
         }
 
-        val screenings = screenController.findScreeningsDate(screenController.findScreeningTitle(movieTitle), date)
+        val screenings = screenController.findScreenings(movieTitle, date)
         if (screenings.isEmpty()) {
             println("해당 날짜에는 상영이 없습니다. 다른 날짜를 입력해 주세요.")
             continue

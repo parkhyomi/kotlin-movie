@@ -1,6 +1,6 @@
 package domain.model.cart
 
-import domain.model.screen.Screening
+import domain.model.ScreeningSchedule.Screening
 import domain.model.seat.Seat
 
 data class CartItem(

@@ -1,6 +1,6 @@
 package controller
 
-import domain.model.screen.Screening
+import domain.model.ScreeningSchedule.Screening
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import support.screeningFixture
