@@ -1,4 +1,7 @@
-package domain.model.seat
+package view
+
+import domain.model.seat.RowLabel
+import domain.model.seat.Seat
 
 // 입력받은 좌석 문자열 목록(A1, B12...)을 Seat 목록으로 변환한다.
 fun parseSeats(seatCodes: List<String>): List<Seat> =

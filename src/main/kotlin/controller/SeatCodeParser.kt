@@ -1,7 +1,7 @@
 package controller
 
 import domain.model.seat.Seat
-import domain.model.seat.parseSeats
+import view.parseSeats
 
 interface SeatCodeParser {
     fun parse(seatCodes: List<String>): List<Seat>

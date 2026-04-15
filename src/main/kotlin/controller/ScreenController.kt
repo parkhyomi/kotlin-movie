@@ -7,7 +7,7 @@ import domain.model.screeningschedule.ScreeningReader
 import domain.model.screeningschedule.ScreeningSchedule
 import domain.model.screeningschedule.ScreeningWriter
 import domain.model.seat.SeatAvailability
-import domain.model.seat.parseSeats
+import view.parseSeats
 import view.defaultScreeningSeeds
 import java.time.LocalDate
 import java.time.LocalTime
