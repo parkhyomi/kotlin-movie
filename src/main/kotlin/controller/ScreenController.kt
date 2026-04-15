@@ -6,6 +6,7 @@ import domain.model.ScreeningSchedule.ScreeningSchedule
 import domain.model.ScreeningSchedule.ScreeningWriter
 import view.defaultScreeningSeeds
 import domain.model.ScreeningSchedule.Screening
+import domain.model.ScreeningSchedule.ScreeningFactory
 import domain.model.seat.SeatAvailability
 import domain.parseSeats
 import java.time.LocalDate
@@ -16,7 +17,7 @@ class ScreenController(
     private val screeningPeriodStart: LocalDate = LocalDate.of(2026, 4, 6),
     private val screeningPeriodEnd: LocalDate = LocalDate.of(2026, 4, 13),
     private val screeningSchedule: ScreeningSchedule =
-        ScreeningSchedule.withSamples(
+        ScreeningFactory().withSamples(
             screeningPeriodStart = screeningPeriodStart,
             screeningPeriodEnd = screeningPeriodEnd,
             movies = Movie.sampleMovies,

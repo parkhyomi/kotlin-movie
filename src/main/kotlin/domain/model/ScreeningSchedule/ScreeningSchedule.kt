@@ -107,36 +107,8 @@ class ScreeningSchedule(
         screenings[index] = target
     }
 
-    // 제목으로 영화를 찾는다.
     private fun findMovie(title: String): Movie =
         movies.firstOrNull { movie ->
             movie.title == title
         } ?: throw IllegalArgumentException("존재하지 않는 영화입니다.")
-
-    companion object {
-        // 임의 영화 목록 + 임의 상영 샘플 값으로 초기 스케줄을 만든다.
-        fun withSamples(
-            screeningPeriodStart: LocalDate,
-            screeningPeriodEnd: LocalDate,
-            movies: List<Movie>,
-            samples: List<ScreeningTemplate>,
-        ): ScreeningSchedule {
-            val screeningSchedule =
-                ScreeningSchedule(
-                    movies = movies,
-                    screeningPeriodStart = screeningPeriodStart,
-                    screeningPeriodEnd = screeningPeriodEnd,
-                )
-
-            // 샘플을 순회하면서 실제 상영을 생성하고 내부 스케줄에 누적한다.
-            samples.forEach { sample ->
-                screeningSchedule.createScreening(
-                    movieTitle = sample.movieTitle,
-                    screeningDate = sample.screeningDate,
-                    startTime = sample.startTime,
-                )
-            }
-            return screeningSchedule
-        }
-    }
 }
