@@ -2,6 +2,7 @@ package controller
 
 import domain.model.ScreeningSchedule.Screening
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Test
 import support.screeningFixture
 import java.time.LocalDate
@@ -58,9 +59,11 @@ class ReservationControllerTest {
 
         val summaries = reservationController.reservationSummaries()
 
-        assertThat(summaries).hasSize(2)
-        assertThat(summaries[0]).isEqualTo("- [F1 더 무비] 2026-04-10 13:00  좌석: C2, C3")
-        assertThat(summaries[1]).isEqualTo("- [토이 스토리] 2026-04-10 16:00  좌석: E2")
+        assertAll(
+            { assertThat(summaries).hasSize(2) },
+            { assertThat(summaries[0]).isEqualTo("- [F1 더 무비] 2026-04-10 13:00  좌석: C2, C3") },
+            { assertThat(summaries[1]).isEqualTo("- [토이 스토리] 2026-04-10 16:00  좌석: E2") },
+        )
     }
 
     @Test

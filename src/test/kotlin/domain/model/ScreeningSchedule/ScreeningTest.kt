@@ -5,6 +5,7 @@ import domain.model.seat.RowLabel
 import domain.model.seat.Seat
 import domain.model.seat.SeatStatus
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalTime
@@ -71,24 +72,30 @@ class ScreeningTest {
     fun `상영 날짜가 같으면 isOn은 true를 반환한다`() {
         val screening = screening(screeningDate = LocalDate.of(2026, 4, 9))
 
-        Assertions.assertThat(screening.isOn(LocalDate.of(2026, 4, 9))).isTrue()
-        Assertions.assertThat(screening.isOn(LocalDate.of(2026, 4, 10))).isFalse()
+        assertAll(
+            { Assertions.assertThat(screening.isOn(LocalDate.of(2026, 4, 9))).isTrue() },
+            { Assertions.assertThat(screening.isOn(LocalDate.of(2026, 4, 10))).isFalse() },
+        )
     }
 
     @Test
     fun `영화 제목이 같으면 isForMovie는 true를 반환한다`() {
         val screening = screening(movie = movie(title = "아이언맨 3", runningMinutes = 122))
 
-        Assertions.assertThat(screening.isForMovie("아이언맨 3")).isTrue()
-        Assertions.assertThat(screening.isForMovie("마더")).isFalse()
+        assertAll(
+            { Assertions.assertThat(screening.isForMovie("아이언맨 3")).isTrue() },
+            { Assertions.assertThat(screening.isForMovie("마더")).isFalse() },
+        )
     }
 
     @Test
     fun `시작 시각이 같으면 startsAt은 true를 반환한다`() {
         val screening = screening(startTime = LocalTime.of(13, 0))
 
-        Assertions.assertThat(screening.startsAt(LocalTime.of(13, 0))).isTrue()
-        Assertions.assertThat(screening.startsAt(LocalTime.of(13, 1))).isFalse()
+        assertAll(
+            { Assertions.assertThat(screening.startsAt(LocalTime.of(13, 0))).isTrue() },
+            { Assertions.assertThat(screening.startsAt(LocalTime.of(13, 1))).isFalse() },
+        )
     }
 
     @Test
@@ -114,10 +121,14 @@ class ScreeningTest {
 
         val reserved = screening.reserveAll(targetSeats)
 
-        targetSeats.forEach { targetSeat ->
-            Assertions.assertThat(seatStatusOf(reserved, targetSeat)).isEqualTo(SeatStatus.RESERVED)
-        }
-        Assertions.assertThat(seatStatusOf(reserved, untouchedSeat)).isEqualTo(SeatStatus.AVAILABLE)
+        assertAll(
+            {
+                targetSeats.forEach { targetSeat ->
+                    Assertions.assertThat(seatStatusOf(reserved, targetSeat)).isEqualTo(SeatStatus.RESERVED)
+                }
+            },
+            { Assertions.assertThat(seatStatusOf(reserved, untouchedSeat)).isEqualTo(SeatStatus.AVAILABLE) },
+        )
 
     }
 
@@ -146,8 +157,10 @@ class ScreeningTest {
                 movie = movie(title = "영화 B", runningMinutes = 100),
             )
 
-        Assertions.assertThat(first.overlapsWith(second)).isTrue()
-        Assertions.assertThat(second.overlapsWith(first)).isTrue()
+        assertAll(
+            { Assertions.assertThat(first.overlapsWith(second)).isTrue() },
+            { Assertions.assertThat(second.overlapsWith(first)).isTrue() },
+        )
     }
 
     @Test
@@ -165,8 +178,10 @@ class ScreeningTest {
                 movie = movie(title = "영화 B", runningMinutes = 100),
             )
 
-        Assertions.assertThat(first.overlapsWith(second)).isFalse()
-        Assertions.assertThat(second.overlapsWith(first)).isFalse()
+        assertAll(
+            { Assertions.assertThat(first.overlapsWith(second)).isFalse() },
+            { Assertions.assertThat(second.overlapsWith(first)).isFalse() },
+        )
     }
 
     @Test
@@ -184,7 +199,9 @@ class ScreeningTest {
                 movie = movie(title = "영화 B", runningMinutes = 120),
             )
 
-        Assertions.assertThat(first.overlapsWith(second)).isFalse()
-        Assertions.assertThat(second.overlapsWith(first)).isFalse()
+        assertAll(
+            { Assertions.assertThat(first.overlapsWith(second)).isFalse() },
+            { Assertions.assertThat(second.overlapsWith(first)).isFalse() },
+        )
     }
 }
