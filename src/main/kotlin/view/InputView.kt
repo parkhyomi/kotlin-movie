@@ -97,20 +97,46 @@ class InputView {
     }
 
     fun readPoint(): Int {
-        println("사용할 포인트를 입력하세요 (없으면 0):")
-        return readln().trim().toIntOrNull() ?: 0
+        while (true) {
+            println("사용할 포인트를 입력하세요 (없으면 0):")
+            val point = readln().trim().toIntOrNull()
+
+            if (point == null) {
+                println("포인트는 숫자로 입력해 주세요.")
+                continue
+            }
+            if (point < 0) {
+                println("포인트는 0 이상이어야 합니다.")
+                continue
+            }
+
+            return point
+        }
     }
 
     fun readPaymentMethod(): PaymentMethod {
-        println("결제 수단을 선택하세요:")
-        println("1. 신용카드")
-        println("2. 현금")
-        return PaymentMethod.entries[readln().trim().toInt() - 1]
+        while (true) {
+            println("결제 수단을 선택하세요:")
+            println("1. 신용카드")
+            println("2. 현금")
+
+            val selectedNumber = readln().trim().toIntOrNull()
+            if (selectedNumber == null) {
+                println("결제 수단 번호를 숫자로 입력해 주세요.")
+                continue
+            }
+            if (selectedNumber !in 1..PaymentMethod.entries.size) {
+                println("존재하지 않는 결제 수단 번호입니다.")
+                continue
+            }
+
+            return PaymentMethod.entries[selectedNumber - 1]
+        }
     }
 
     fun readContinuePayment(): Boolean {
         println("위 금액으로 결제하시겠습니까? (Y/N)")
-        return readYesNoWithoutGuide()
+        return readYesNo()
     }
 
     private fun readScreeningIndex(maxIndex: Int): Int {
@@ -132,7 +158,9 @@ class InputView {
         }
     }
 
-    private fun readYesNoWithGuide(): Boolean {
+    private fun readYesNoWithGuide(): Boolean = readYesNo()
+
+    private fun readYesNo(): Boolean {
         while (true) {
             val answer = readln().trim().uppercase()
 
@@ -144,19 +172,6 @@ class InputView {
             }
 
             println("Y 또는 N을 입력해 주세요.")
-        }
-    }
-
-    private fun readYesNoWithoutGuide(): Boolean {
-        while (true) {
-            val answer = readln().trim().uppercase()
-
-            if (answer == "Y") {
-                return true
-            }
-            if (answer == "N") {
-                return false
-            }
         }
     }
 }
