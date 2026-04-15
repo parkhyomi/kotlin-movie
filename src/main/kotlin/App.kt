@@ -1,3 +1,10 @@
+
+import view.InputView
+import view.OutView
+
 fun main() {
-    cinema()
+    cinema(
+        inputView = InputView(),
+        outView = OutView(),
+    )
 }
