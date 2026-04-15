@@ -1,6 +1,6 @@
 package domain.model.payment.policy
 
-import domain.model.ScreeningSchedule.Screening
+import domain.model.screeningschedule.Screening
 
 class MovieDayDiscountPolicy(
     private val movieDays: Set<Int> = setOf(10, 20, 30),

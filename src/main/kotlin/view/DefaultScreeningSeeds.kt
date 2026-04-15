@@ -1,5 +1,6 @@
 package view
 
+import domain.model.screeningschedule.ScreeningTemplate
 import java.time.LocalDate
 import java.time.LocalTime
 

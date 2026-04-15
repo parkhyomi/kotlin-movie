@@ -5,9 +5,9 @@ import domain.model.seat.Seat
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
+import support.screeningFixture
 import java.time.LocalDate
 import java.time.LocalTime
-import support.screeningFixture
 
 class CartTest {
     @Test

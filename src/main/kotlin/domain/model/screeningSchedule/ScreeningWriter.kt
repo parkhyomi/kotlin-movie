@@ -1,4 +1,4 @@
-package domain.model.ScreeningSchedule
+package domain.model.screeningschedule
 
 import domain.model.seat.Seat
 import java.time.LocalDate

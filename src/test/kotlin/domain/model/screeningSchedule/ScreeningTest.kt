@@ -1,4 +1,4 @@
-package domain.model.ScreeningSchedule
+package domain.model.screeningschedule
 
 import domain.model.Movie
 import domain.model.seat.RowLabel
@@ -129,7 +129,6 @@ class ScreeningTest {
             },
             { Assertions.assertThat(seatStatusOf(reserved, untouchedSeat)).isEqualTo(SeatStatus.AVAILABLE) },
         )
-
     }
 
     @Test

@@ -21,5 +21,4 @@ data class Pay(
         val amount = payAmount - point.value
         return payMethodPolicy.payAmountApply(amount, paymentMethod).coerceAtLeast(0)
     }
-
 }

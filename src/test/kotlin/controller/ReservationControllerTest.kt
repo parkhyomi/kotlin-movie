@@ -1,6 +1,6 @@
 package controller
 
-import domain.model.ScreeningSchedule.Screening
+import domain.model.screeningschedule.Screening
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Test
@@ -14,12 +14,13 @@ class ReservationControllerTest {
         startTime: LocalTime = LocalTime.of(10, 0),
         title: String = "테스트 영화",
         runningMinutes: Int = 120,
-    ): Screening = screeningFixture(
-        date = date,
-        startTime = startTime,
-        title = title,
-        runningMinutes = runningMinutes
-    )
+    ): Screening =
+        screeningFixture(
+            date = date,
+            startTime = startTime,
+            title = title,
+            runningMinutes = runningMinutes,
+        )
 
     @Test
     fun `reserve는 좌석 코드를 공백 제거 후 대문자로 정규화해서 저장한다`() {
@@ -33,7 +34,7 @@ class ReservationControllerTest {
 
         assertThat(item.seats.map { seat -> "${seat.row.name}${seat.column}" }).containsExactly(
             "C2",
-            "A12"
+            "A12",
         )
     }
 

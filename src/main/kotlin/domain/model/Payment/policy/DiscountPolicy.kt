@@ -1,6 +1,6 @@
 package domain.model.payment.policy
 
-import domain.model.ScreeningSchedule.Screening
+import domain.model.screeningschedule.Screening
 
 interface DiscountPolicy {
     fun apply(

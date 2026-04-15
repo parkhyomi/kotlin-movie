@@ -1,6 +1,6 @@
 package domain.model.cart
 
-import domain.model.ScreeningSchedule.Screening
+import domain.model.screeningschedule.Screening
 
 // 예약 완료한 예매 리스트를 누적 저장하는 장바구니 도메인
 class Cart(

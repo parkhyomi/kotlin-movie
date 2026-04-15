@@ -4,9 +4,9 @@ import domain.model.payment.Discount
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Test
+import support.screeningFixture
 import java.time.LocalDate
 import java.time.LocalTime
-import support.screeningFixture
 
 class DiscountTest {
     private val discount = Discount()

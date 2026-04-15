@@ -1,17 +1,16 @@
 package controller
 
 import domain.model.Movie
-import domain.model.ScreeningSchedule.ScreeningReader
-import domain.model.ScreeningSchedule.ScreeningSchedule
-import domain.model.ScreeningSchedule.ScreeningWriter
-import view.defaultScreeningSeeds
-import domain.model.ScreeningSchedule.Screening
-import domain.model.ScreeningSchedule.ScreeningFactory
+import domain.model.screeningschedule.Screening
+import domain.model.screeningschedule.ScreeningFactory
+import domain.model.screeningschedule.ScreeningReader
+import domain.model.screeningschedule.ScreeningSchedule
+import domain.model.screeningschedule.ScreeningWriter
 import domain.model.seat.SeatAvailability
-import domain.parseSeats
+import domain.model.seat.parseSeats
+import view.defaultScreeningSeeds
 import java.time.LocalDate
 import java.time.LocalTime
-
 
 class ScreenController(
     private val screeningPeriodStart: LocalDate = LocalDate.of(2026, 4, 6),

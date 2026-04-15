@@ -1,7 +1,6 @@
-package domain.model.ScreeningSchedule
+package domain.model.screeningschedule
 
 import domain.model.Movie
-import view.ScreeningTemplate
 import java.time.LocalDate
 
 class ScreeningFactory {

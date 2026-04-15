@@ -1,10 +1,10 @@
-package domain.model.ScreeningSchedule
+package domain.model.screeningschedule
 
 import java.time.LocalDate
 import java.time.LocalTime
 
-data class ScreeningKey(
+data class ScreeningTemplate(
     val movieTitle: String,
-    val date: LocalDate,
+    val screeningDate: LocalDate,
     val startTime: LocalTime,
 )

@@ -1,7 +1,7 @@
 package support
 
 import domain.model.Movie
-import domain.model.ScreeningSchedule.Screening
+import domain.model.screeningschedule.Screening
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat
 import java.time.LocalDate

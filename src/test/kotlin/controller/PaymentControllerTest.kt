@@ -5,10 +5,10 @@ import domain.model.payment.policy.PaymentMethod
 import domain.model.seat.RowLabel
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
-import java.time.LocalTime
 import support.screeningFixture
 import support.seatFixture
+import java.time.LocalDate
+import java.time.LocalTime
 
 class PaymentControllerTest {
     private fun item(

@@ -1,7 +1,7 @@
 package view
 
-import domain.model.ScreeningSchedule.Screening
 import domain.model.payment.policy.PaymentMethod
+import domain.model.screeningschedule.Screening
 import java.time.LocalDate
 
 class InputView {

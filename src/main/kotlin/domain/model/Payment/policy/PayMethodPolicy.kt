@@ -1,12 +1,10 @@
 package domain.model.payment.policy
 
-class PayMethodPolicy{
+class PayMethodPolicy {
     fun payAmountApply(
         amount: Int,
         paymentMethod: PaymentMethod,
-    ): Int {
-        return amount - (amount * paymentMethod.discountRate).toInt()
-    }
+    ): Int = amount - (amount * paymentMethod.discountRate).toInt()
 }
 
 enum class PaymentMethod(

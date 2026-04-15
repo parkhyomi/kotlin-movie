@@ -7,7 +7,6 @@ data class SeatInventory(
     private val seats: List<SeatAvailability>,
     private val seatReservationPolicy: SeatReservationPolicy = DefaultSeatReservationPolicy(),
 ) {
-
     fun reserve(targetSeat: Seat): SeatInventory {
         require(seatReservationPolicy.canReserve(seats, targetSeat)) { "이미 예약된 좌석입니다." }
         return copy(

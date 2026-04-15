@@ -1,11 +1,10 @@
-package domain.model.ScreeningSchedule
+package domain.model.screeningschedule
 
 import domain.model.Movie
-import domain.model.ScreeningSchedule.policy.DefaultScreeningCreationPolicy
-import domain.model.ScreeningSchedule.policy.ScreeningCreationPolicy
+import domain.model.screeningschedule.policy.DefaultScreeningCreationPolicy
+import domain.model.screeningschedule.policy.ScreeningCreationPolicy
 import domain.model.seat.Seat
 import domain.model.seat.SeatAvailability
-import view.ScreeningTemplate
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -16,7 +15,8 @@ class ScreeningSchedule(
     private val screeningPeriodEnd: LocalDate,
     screenings: List<Screening> = emptyList(),
     private val screeningCreationPolicy: ScreeningCreationPolicy = DefaultScreeningCreationPolicy(),
-) : ScreeningReader, ScreeningWriter {
+) : ScreeningReader,
+    ScreeningWriter {
     private val screenings: MutableList<Screening> = screenings.toMutableList()
 
     init {

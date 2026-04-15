@@ -1,9 +1,9 @@
 package domain.model.payment
 
-import domain.model.payment.policy.MovieDayDiscountPolicy
 import domain.model.payment.policy.DiscountPolicy
+import domain.model.payment.policy.MovieDayDiscountPolicy
 import domain.model.payment.policy.TimeDiscountPolicy
-import domain.model.ScreeningSchedule.Screening
+import domain.model.screeningschedule.Screening
 
 class Discount {
     private val policies: List<DiscountPolicy> =
