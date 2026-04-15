@@ -4,17 +4,21 @@ import domain.model.payment.policy.PayMethodPolicy
 import domain.model.payment.policy.PaymentMethod
 
 data class Pay(
-    private val point: Int,
+    private val point: Point,
     private val paymentMethod: PaymentMethod,
 ) {
-    init {
-        require(point >= 0) { "포인트는 0 이상이어야 합니다." }
-    }
+    constructor(
+        point: Int,
+        paymentMethod: PaymentMethod,
+    ) : this(
+        point = Point.from(point),
+        paymentMethod = paymentMethod,
+    )
 
     private val payMethodPolicy = PayMethodPolicy()
 
     fun payAmountApply(payAmount: Int): Int {
-        val amount = payAmount - point
+        val amount = payAmount - point.value
         return payMethodPolicy.payAmountApply(amount, paymentMethod).coerceAtLeast(0)
     }
 
