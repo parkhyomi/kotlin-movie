@@ -20,7 +20,7 @@ class PaymentCalculator(
             }
 
         return Pay(
-            point = point,
+            point = Point.from(point),
             paymentMethod = paymentMethod,
         ).payAmountApply(discountAppliedAmount)
     }
