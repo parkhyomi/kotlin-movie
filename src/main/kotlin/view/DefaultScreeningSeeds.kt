@@ -1,6 +1,5 @@
 package view
 
-import view.ScreeningTemplate
 import java.time.LocalDate
 import java.time.LocalTime
 

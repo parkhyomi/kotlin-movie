@@ -111,4 +111,19 @@ class ScreeningSchedule(
         movies.firstOrNull { movie ->
             movie.title == title
         } ?: throw IllegalArgumentException("존재하지 않는 영화입니다.")
+
+    companion object {
+        fun withSamples(
+            screeningPeriodStart: LocalDate,
+            screeningPeriodEnd: LocalDate,
+            movies: List<Movie>,
+            samples: List<ScreeningTemplate>,
+        ): ScreeningSchedule =
+            ScreeningFactory().withSamples(
+                screeningPeriodStart = screeningPeriodStart,
+                screeningPeriodEnd = screeningPeriodEnd,
+                movies = movies,
+                samples = samples,
+            )
+    }
 }
