@@ -1,6 +1,6 @@
 package domain.model.screeningschedule
 
-import domain.model.Movie
+import domain.model.Movie.Movie
 import domain.model.seat.Seat
 import domain.model.seat.SeatAvailability
 import domain.model.seat.SeatInventory
@@ -14,16 +14,16 @@ data class Screening(
     private val seatInventory: SeatInventory = SeatInventory(SeatInventory.defaultSeatAvailabilities()),
 ) {
     // 종료 시각은 영화 러닝타임으로 계산한다. (예: 12:00 + 120분 = 14:00)
-    val endTime: LocalTime = startTime.plusMinutes(movie.runningMinutes.toLong())
+    val endTime: LocalTime = startTime.plusMinutes(movie.findRunningMinutes())
 
     init {
-        require(movie.runningMinutes > 0) { "영화 상영 시간은 0보다 커야 합니다." }
+        require(movie.findRunningMinutes() > 0) { "영화 상영 시간은 0보다 커야 합니다." }
         require(endTime.isAfter(startTime)) { "상영 종료 시간은 시작 시간 이후여야 합니다." }
     }
 
     fun isOn(date: LocalDate): Boolean = screeningDate == date
 
-    fun isForMovie(title: String): Boolean = movie.title == title
+    fun isForMovie(title: String): Boolean = movie.findMovieTitle() == title
 
     fun startsAt(time: LocalTime): Boolean = startTime == time
 

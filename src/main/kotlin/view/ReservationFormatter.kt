@@ -9,6 +9,6 @@ object ReservationFormatter {
                 "${seat.row.name}${seat.column}"
             }
 
-        return "- [${item.screening.movie.title}] ${item.screening.screeningDate} ${item.screening.startTime}  좌석: $seatCodes"
+        return "- [${item.screening.movie.findMovieTitle()}] ${item.screening.screeningDate} ${item.screening.startTime}  좌석: $seatCodes"
     }
 }

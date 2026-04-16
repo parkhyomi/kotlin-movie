@@ -1,6 +1,6 @@
 package support
 
-import domain.model.Movie
+import domain.model.Movie.Movie
 import domain.model.screeningschedule.Screening
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat

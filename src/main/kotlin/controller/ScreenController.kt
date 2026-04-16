@@ -1,6 +1,6 @@
 package controller
 
-import domain.model.Movie
+import domain.model.Movie.Movie
 import domain.model.screeningschedule.Screening
 import domain.model.screeningschedule.ScreeningFactory
 import domain.model.screeningschedule.ScreeningReader

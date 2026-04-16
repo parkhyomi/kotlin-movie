@@ -17,7 +17,7 @@ class DefaultScreeningCreationPolicy : ScreeningCreationPolicy {
         val hasOverlapForSameMovie =
             existing
                 .filter { screening ->
-                    screening.isForMovie(candidate.movie.title)
+                    screening.isForMovie(candidate.movie.findMovieTitle())
                 }.any { screening ->
                     screening.overlapsWith(candidate)
                 }

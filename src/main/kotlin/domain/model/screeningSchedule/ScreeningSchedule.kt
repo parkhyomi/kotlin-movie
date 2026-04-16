@@ -1,6 +1,6 @@
 package domain.model.screeningschedule
 
-import domain.model.Movie
+import domain.model.Movie.Movie
 import domain.model.screeningschedule.policy.DefaultScreeningCreationPolicy
 import domain.model.screeningschedule.policy.ScreeningCreationPolicy
 import domain.model.seat.Seat
@@ -109,7 +109,7 @@ class ScreeningSchedule(
 
     private fun findMovie(title: String): Movie =
         movies.firstOrNull { movie ->
-            movie.title == title
+            movie.findMovieTitle() == title
         } ?: throw IllegalArgumentException("존재하지 않는 영화입니다.")
 
     companion object {

@@ -1,6 +1,6 @@
 package domain.model.schedule
 
-import domain.model.Movie
+import domain.model.Movie.Movie
 import domain.model.screeningschedule.Screening
 import domain.model.screeningschedule.ScreeningSchedule
 import domain.model.screeningschedule.ScreeningTemplate
@@ -46,7 +46,7 @@ class ScreeningScheduleTest {
         Screening(
             screeningDate = date,
             startTime = startTime,
-            movie = testMovies().first { movie -> movie.title == movieTitle },
+            movie = testMovies().first { movie -> movie.findMovieTitle() == movieTitle },
         )
 
     private fun testMovies(): List<Movie> =
@@ -202,7 +202,7 @@ class ScreeningScheduleTest {
                 startTime = LocalTime.of(11, 0),
             )
 
-        assertThat(screening.movie.title).isEqualTo("탑건: 매버릭")
+        assertThat(screening.movie.findMovieTitle()).isEqualTo("탑건: 매버릭")
         assertThat(screening.startTime).isEqualTo(LocalTime.of(11, 0))
         assertThat(screening.endTime).isEqualTo(LocalTime.of(13, 10))
     }
