@@ -7,7 +7,6 @@ interface ScreeningCreationPolicy {
     fun validate(
         candidate: Screening,
         existing: List<Screening>,
-        periodStart: LocalDate,
-        periodEnd: LocalDate,
+        screenPeriod: ScreenPeriod,
     )
 }

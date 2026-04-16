@@ -2,33 +2,28 @@ package domain.model.screeningschedule
 
 import domain.model.Movie.Movie
 import domain.model.screeningschedule.policy.DefaultScreeningCreationPolicy
+import domain.model.screeningschedule.policy.ScreenPeriod
 import domain.model.screeningschedule.policy.ScreeningCreationPolicy
 import domain.model.seat.Seat
 import domain.model.seat.SeatAvailability
 import java.time.LocalDate
 import java.time.LocalTime
 
-// 상영 기간(날짜 범위) 내에서 실제 상영(Screening) 목록을 관리한다.
 class ScreeningSchedule(
     private val movies: List<Movie>,
-    private val screeningPeriodStart: LocalDate,
-    private val screeningPeriodEnd: LocalDate,
+    private val screenPeriod: ScreenPeriod,
     screenings: List<Screening> = emptyList(),
     private val screeningCreationPolicy: ScreeningCreationPolicy = DefaultScreeningCreationPolicy(),
-) : ScreeningReader,
-    ScreeningWriter {
+) {
+
     private val screenings: MutableList<Screening> = screenings.toMutableList()
 
-    init {
-        require(!screeningPeriodEnd.isBefore(screeningPeriodStart)) { "상영 기간 종료일은 시작일보다 빠를 수 없습니다." }
-    }
-
-    override fun screeningsOfMovieTitle(movieTitle: String): List<Screening> =
+    fun screeningsOfMovieTitle(movieTitle: String): List<Screening> =
         screenings.filter { screening ->
             screening.isForMovie(movieTitle)
         }
 
-    override fun screeningsOfMovieDate(
+    fun screeningsOfMovieDate(
         screenings: List<Screening>,
         date: LocalDate,
     ): List<Screening> =
@@ -36,20 +31,18 @@ class ScreeningSchedule(
             screening.isOn(date)
         }
 
-    override fun seatStatusesOf(
+    fun seatStatusesOf(
         movieTitle: String,
         date: LocalDate,
         startTime: LocalTime,
     ): List<SeatAvailability> =
         screeningOf(
-            ScreeningKey(
-                movieTitle = movieTitle,
-                date = date,
-                startTime = startTime,
-            ),
+            movieTitle = movieTitle,
+            date = date,
+            startTime = startTime,
         ).seatStatuses()
 
-    override fun reserveSeats(
+    fun reserveSeats(
         movieTitle: String,
         date: LocalDate,
         startTime: LocalTime,
@@ -57,18 +50,16 @@ class ScreeningSchedule(
     ): Screening {
         val source =
             screeningOf(
-                ScreeningKey(
-                    movieTitle = movieTitle,
-                    date = date,
-                    startTime = startTime,
-                ),
+                movieTitle = movieTitle,
+                date = date,
+                startTime = startTime,
             )
         val target = source.reserveAll(seats)
         replace(source, target)
         return target
     }
 
-    override fun createScreening(
+    fun createScreening(
         movieTitle: String,
         screeningDate: LocalDate,
         startTime: LocalTime,
@@ -84,17 +75,20 @@ class ScreeningSchedule(
         screeningCreationPolicy.validate(
             candidate = newScreening,
             existing = screenings.toList(),
-            periodStart = screeningPeriodStart,
-            periodEnd = screeningPeriodEnd,
+            screenPeriod= screenPeriod,
         )
         screenings.add(newScreening)
         return newScreening
     }
 
-    private fun screeningOf(key: ScreeningKey): Screening =
-        screeningsOfMovieDate(screeningsOfMovieTitle(key.movieTitle), key.date)
+    private fun screeningOf(
+        movieTitle: String,
+        date: LocalDate,
+        startTime: LocalTime,
+    ): Screening =
+        screeningsOfMovieDate(screeningsOfMovieTitle(movieTitle), date)
             .firstOrNull { screening ->
-                screening.startsAt(key.startTime)
+                screening.startsAt(startTime)
             }
             ?: throw IllegalArgumentException("해당 조건의 상영이 존재하지 않습니다.")
 
@@ -111,19 +105,4 @@ class ScreeningSchedule(
         movies.firstOrNull { movie ->
             movie.findMovieTitle() == title
         } ?: throw IllegalArgumentException("존재하지 않는 영화입니다.")
-
-    companion object {
-        fun withSamples(
-            screeningPeriodStart: LocalDate,
-            screeningPeriodEnd: LocalDate,
-            movies: List<Movie>,
-            samples: List<ScreeningTemplate>,
-        ): ScreeningSchedule =
-            ScreeningFactory().withSamples(
-                screeningPeriodStart = screeningPeriodStart,
-                screeningPeriodEnd = screeningPeriodEnd,
-                movies = movies,
-                samples = samples,
-            )
-    }
 }
