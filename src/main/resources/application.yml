@@ -1,0 +1,8 @@
+cinema:
+  db:
+    # true면 H2 파일 DB를 사용한다.
+    # 실제 기본 URL은 H2ConnectionFactory의 LOCAL_FILE_URL:
+    # jdbc:h2:file:./data/cinema;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE
+    local: true
+    # 직접 URL을 고정하고 싶으면 아래 주석을 해제해서 사용:
+    # url: jdbc:h2:file:./data/cinema;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE
