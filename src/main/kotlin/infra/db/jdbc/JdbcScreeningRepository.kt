@@ -23,8 +23,8 @@ import kotlin.use
 class JdbcScreeningRepository(
     private val isLocal: Boolean = true,
     private val customUrl: String? = null,
-    private val movieRepository: MovieRepository = JdbcMovieRepository(isLocal = isLocal, customUrl = customUrl),
-    private val reservationRepository: ReservationRepository = JdbcReservationRepository(isLocal = isLocal, customUrl = customUrl),
+    private val movieRepository: MovieRepository,
+    private val reservationRepository: ReservationRepository,
     private val screenPeriod: ScreenPeriod = ScreenPeriod(),
     private val screeningCreationPolicy: ScreeningCreationPolicy = DefaultScreeningCreationPolicy(),
 ) : ScreeningRepository {
