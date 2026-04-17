@@ -1,7 +1,7 @@
 package controller
 
 import infra.db.SchemaInitializer
-import infra.db.inmemory.InMemoryMovie
+import infra.db.inmemory.InMemoryMovieRepository
 import infra.db.inmemory.InMemoryReservationRepository
 import infra.db.inmemory.InMemoryScreeningRepository
 import infra.db.jdbc.JdbcMovieRepository
@@ -14,7 +14,7 @@ object CinemaControllerFactory {
     fun withJdbc(customUrl: String): CinemaController = createJdbcController(isLocal = false, customUrl = customUrl)
 
     fun withInMemory(): CinemaController {
-        val movieRepository = InMemoryMovie
+        val movieRepository = InMemoryMovieRepository
         val reservationRepository = InMemoryReservationRepository()
         val screeningRepository =
             InMemoryScreeningRepository(

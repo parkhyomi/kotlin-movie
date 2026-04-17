@@ -1,11 +1,11 @@
 package infra.db.inmemory
 
-import domain.model.Movie.Movie
-import domain.model.Movie.MovieTitle
-import domain.model.Movie.RunningMinutes
+import domain.model.movie.Movie
+import domain.model.movie.MovieTitle
+import domain.model.movie.RunningMinutes
 import infra.db.repository.MovieRepository
 
-object InMemoryMovie : MovieRepository {
+object InMemoryMovieRepository : MovieRepository {
     val TOP_GUN_MAVERICK = Movie(1L, MovieTitle("탑건: 매버릭"), RunningMinutes(130))
     val MOTHER = Movie(2L, MovieTitle("마더"), RunningMinutes(100))
     val SPIDER_MAN_NO_WAY_HOME = Movie(3L, MovieTitle("스파이더맨: 노 웨이 홈"), RunningMinutes(140))
