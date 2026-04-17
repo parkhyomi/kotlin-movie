@@ -1,8 +1,8 @@
 package infra.db.jdbc
 
-import domain.model.Movie.Movie
-import domain.model.Movie.MovieTitle
-import domain.model.Movie.RunningMinutes
+import domain.model.movie.Movie
+import domain.model.movie.MovieTitle
+import domain.model.movie.RunningMinutes
 import infra.db.H2ConnectionFactory
 import infra.db.repository.MovieRepository
 import java.sql.Connection

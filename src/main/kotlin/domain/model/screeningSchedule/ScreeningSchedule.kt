@@ -1,6 +1,6 @@
 package domain.model.screeningschedule
 
-import domain.model.Movie.Movie
+import domain.model.movie.Movie
 import domain.model.screeningschedule.policy.DefaultScreeningCreationPolicy
 import domain.model.screeningschedule.policy.ScreenPeriod
 import domain.model.screeningschedule.policy.ScreeningCreationPolicy
@@ -15,7 +15,6 @@ class ScreeningSchedule(
     screenings: List<Screening> = emptyList(),
     private val screeningCreationPolicy: ScreeningCreationPolicy = DefaultScreeningCreationPolicy(),
 ) {
-
     private val screenings: MutableList<Screening> = screenings.toMutableList()
 
     fun screeningsOfMovieTitle(movieTitle: String): List<Screening> =
@@ -75,7 +74,7 @@ class ScreeningSchedule(
         screeningCreationPolicy.validate(
             candidate = newScreening,
             existing = screenings.toList(),
-            screenPeriod= screenPeriod,
+            screenPeriod = screenPeriod,
         )
         screenings.add(newScreening)
         return newScreening

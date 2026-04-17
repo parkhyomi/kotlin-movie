@@ -1,6 +1,6 @@
 package controller
 
-import domain.model.Movie.Movie
+import domain.model.movie.Movie
 import domain.model.payment.policy.PaymentMethod
 import infra.db.SchemaInitializer
 import infra.db.jdbc.JdbcMovieRepository

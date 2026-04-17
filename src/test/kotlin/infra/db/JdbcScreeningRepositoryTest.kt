@@ -20,7 +20,7 @@ class JdbcScreeningRepositoryTest {
         SchemaInitializer.initializeWithUrl(dbUrl)
 
         val movieRepository = JdbcMovieRepository(isLocal = false, customUrl = dbUrl)
-        movieRepository.saveAll(domain.model.Movie.Movie.sampleMovies)
+        movieRepository.saveAll(domain.model.movie.Movie.sampleMovies)
         val reservationRepository = JdbcReservationRepository(isLocal = false, customUrl = dbUrl)
 
         val repository =
@@ -46,7 +46,7 @@ class JdbcScreeningRepositoryTest {
         SchemaInitializer.initializeWithUrl(dbUrl)
 
         val movieRepository = JdbcMovieRepository(isLocal = false, customUrl = dbUrl)
-        movieRepository.saveAll(domain.model.Movie.Movie.sampleMovies)
+        movieRepository.saveAll(domain.model.movie.Movie.sampleMovies)
         val reservationRepository = JdbcReservationRepository(isLocal = false, customUrl = dbUrl)
 
         val repository =
@@ -77,7 +77,7 @@ class JdbcScreeningRepositoryTest {
         SchemaInitializer.initializeWithUrl(fileUrl)
 
         val firstMovieRepository = JdbcMovieRepository(isLocal = false, customUrl = fileUrl)
-        firstMovieRepository.saveAll(domain.model.Movie.Movie.sampleMovies)
+        firstMovieRepository.saveAll(domain.model.movie.Movie.sampleMovies)
         val firstReservationRepository = JdbcReservationRepository(isLocal = false, customUrl = fileUrl)
 
         val firstRepository =

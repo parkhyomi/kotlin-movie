@@ -18,7 +18,6 @@ class InMemoryScreeningRepository(
     private val screenPeriod: ScreenPeriod = ScreenPeriod(),
     private val screeningCreationPolicy: ScreeningCreationPolicy = DefaultScreeningCreationPolicy(),
 ) : ScreeningRepository {
-
     private val screenings: MutableList<ScreeningRow> = mutableListOf()
     private var nextId: Long = 1L
 
@@ -47,7 +46,8 @@ class InMemoryScreeningRepository(
                 }
 
             val reservedSeats =
-                screening.seatStatuses()
+                screening
+                    .seatStatuses()
                     .filter { seatAvailability -> !seatAvailability.isAvailable() }
                     .map { seatAvailability -> seatAvailability.seat }
 

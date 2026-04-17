@@ -1,8 +1,8 @@
 package infra.db.jdbc
 
-import domain.model.Movie.Movie
-import domain.model.Movie.MovieTitle
-import domain.model.Movie.RunningMinutes
+import domain.model.movie.Movie
+import domain.model.movie.MovieTitle
+import domain.model.movie.RunningMinutes
 import domain.model.screeningschedule.Screening
 import domain.model.screeningschedule.policy.DefaultScreeningCreationPolicy
 import domain.model.screeningschedule.policy.ScreenPeriod
@@ -49,7 +49,8 @@ class JdbcScreeningRepository(
                     }
 
             val reservedSeats =
-                screening.seatStatuses()
+                screening
+                    .seatStatuses()
                     .filter { seatAvailability -> !seatAvailability.isAvailable() }
                     .map { seatAvailability -> seatAvailability.seat }
 

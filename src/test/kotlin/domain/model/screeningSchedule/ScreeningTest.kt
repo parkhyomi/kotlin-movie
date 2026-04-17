@@ -1,6 +1,6 @@
 package domain.model.screeningschedule
 
-import domain.model.Movie.Movie
+import domain.model.movie.Movie
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat
 import domain.model.seat.SeatStatus
@@ -39,10 +39,10 @@ class ScreeningTest {
     @Test
     fun `종료 시각은 시작 시각 + 영화 러닝타임으로 계산된다`() {
         val screening =
-                screening(
-                    startTime = LocalTime.of(10, 0),
-                    movie = movie(title = "탑건: 매버릭", runningMinutes = 130),
-                )
+            screening(
+                startTime = LocalTime.of(10, 0),
+                movie = movie(title = "탑건: 매버릭", runningMinutes = 130),
+            )
 
         Assertions.assertThat(screening.endTime).isEqualTo(LocalTime.of(12, 10))
     }

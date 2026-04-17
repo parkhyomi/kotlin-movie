@@ -1,6 +1,6 @@
 package infra.db
 
-import domain.model.Movie.Movie
+import domain.model.movie.Movie
 import infra.db.jdbc.JdbcMovieRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

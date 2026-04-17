@@ -9,9 +9,10 @@ class DefaultScreeningCreationPolicy : ScreeningCreationPolicy {
         screenPeriod: ScreenPeriod,
     ) {
         require(
-            !candidate.screeningDate.isBefore(screenPeriod.screeningPeriodStart) && !candidate.screeningDate.isAfter(
-                screenPeriod.screeningPeriodEnd
-            )
+            !candidate.screeningDate.isBefore(screenPeriod.screeningPeriodStart) &&
+                !candidate.screeningDate.isAfter(
+                    screenPeriod.screeningPeriodEnd,
+                ),
         ) {
             "상영 기간 밖의 날짜입니다."
         }

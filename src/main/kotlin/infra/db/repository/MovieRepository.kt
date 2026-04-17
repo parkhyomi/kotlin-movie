@@ -1,6 +1,6 @@
 package infra.db.repository
 
-import domain.model.Movie.Movie
+import domain.model.movie.Movie
 
 interface MovieRepository {
     fun findAllMovies(): List<Movie>

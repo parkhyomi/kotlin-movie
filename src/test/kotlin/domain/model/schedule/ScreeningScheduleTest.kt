@@ -1,6 +1,6 @@
 package domain.model.schedule
 
-import domain.model.Movie.Movie
+import domain.model.movie.Movie
 import domain.model.screeningschedule.Screening
 import domain.model.screeningschedule.ScreeningSchedule
 import domain.model.screeningschedule.policy.ScreenPeriod
@@ -263,5 +263,4 @@ class ScreeningScheduleTest {
 
         assertThat(created.startTime).isEqualTo(LocalTime.of(12, 10))
     }
-
 }

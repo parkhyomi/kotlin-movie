@@ -1,6 +1,6 @@
 package infra.db
 
-import domain.model.Movie.Movie
+import domain.model.movie.Movie
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat
 import infra.db.jdbc.JdbcMovieRepository

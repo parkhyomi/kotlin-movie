@@ -1,6 +1,6 @@
 package controller
 
-import domain.model.Movie.Movie
+import domain.model.movie.Movie
 import infra.db.repository.MovieRepository
 import infra.db.repository.ScreeningRepository
 import java.time.LocalDate

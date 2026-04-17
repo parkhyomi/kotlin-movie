@@ -1,4 +1,4 @@
-package domain.model.Movie
+package domain.model.movie
 
 data class MovieTitle(
     val value: String,
