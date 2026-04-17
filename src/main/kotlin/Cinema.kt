@@ -1,5 +1,5 @@
-import controller.CinemaController
-import controller.CinemaControllerFactory
+import domain.backend.facade.CinemaController
+import domain.backend.factory.CinemaControllerFactory
 import view.InputView
 import view.OutView
 
