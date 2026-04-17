@@ -4,6 +4,7 @@ import domain.model.seat.RowLabel
 import domain.model.seat.Seat
 import domain.model.seat.SeatStatus
 import infra.db.jdbc.JdbcMovieRepository
+import infra.db.jdbc.JdbcReservationRepository
 import infra.db.jdbc.JdbcScreeningRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -20,8 +21,15 @@ class JdbcScreeningRepositoryTest {
 
         val movieRepository = JdbcMovieRepository(isLocal = false, customUrl = dbUrl)
         movieRepository.saveAll(domain.model.Movie.Movie.sampleMovies)
+        val reservationRepository = JdbcReservationRepository(isLocal = false, customUrl = dbUrl)
 
-        val repository = JdbcScreeningRepository(isLocal = false, customUrl = dbUrl)
+        val repository =
+            JdbcScreeningRepository(
+                isLocal = false,
+                customUrl = dbUrl,
+                movieRepository = movieRepository,
+                reservationRepository = reservationRepository,
+            )
         repository.createScreening("탑건: 매버릭", LocalDate.of(2026, 4, 6), LocalTime.of(10, 0))
         repository.createScreening("마더", LocalDate.of(2026, 4, 6), LocalTime.of(13, 0))
 
@@ -39,8 +47,15 @@ class JdbcScreeningRepositoryTest {
 
         val movieRepository = JdbcMovieRepository(isLocal = false, customUrl = dbUrl)
         movieRepository.saveAll(domain.model.Movie.Movie.sampleMovies)
+        val reservationRepository = JdbcReservationRepository(isLocal = false, customUrl = dbUrl)
 
-        val repository = JdbcScreeningRepository(isLocal = false, customUrl = dbUrl)
+        val repository =
+            JdbcScreeningRepository(
+                isLocal = false,
+                customUrl = dbUrl,
+                movieRepository = movieRepository,
+                reservationRepository = reservationRepository,
+            )
         val date = LocalDate.of(2026, 4, 6)
         val startTime = LocalTime.of(16, 0)
         repository.createScreening("아이언맨 3", date, startTime)
@@ -63,15 +78,30 @@ class JdbcScreeningRepositoryTest {
 
         val firstMovieRepository = JdbcMovieRepository(isLocal = false, customUrl = fileUrl)
         firstMovieRepository.saveAll(domain.model.Movie.Movie.sampleMovies)
+        val firstReservationRepository = JdbcReservationRepository(isLocal = false, customUrl = fileUrl)
 
-        val firstRepository = JdbcScreeningRepository(isLocal = false, customUrl = fileUrl)
+        val firstRepository =
+            JdbcScreeningRepository(
+                isLocal = false,
+                customUrl = fileUrl,
+                movieRepository = firstMovieRepository,
+                reservationRepository = firstReservationRepository,
+            )
         val date = LocalDate.of(2026, 4, 8)
         val startTime = LocalTime.of(14, 0)
         firstRepository.createScreening("남은 인생 10년", date, startTime)
         val reservedSeat = Seat(column = 3, row = RowLabel.C)
         firstRepository.reserveSeats("남은 인생 10년", date, startTime, listOf(reservedSeat))
 
-        val secondRepository = JdbcScreeningRepository(isLocal = false, customUrl = fileUrl)
+        val secondMovieRepository = JdbcMovieRepository(isLocal = false, customUrl = fileUrl)
+        val secondReservationRepository = JdbcReservationRepository(isLocal = false, customUrl = fileUrl)
+        val secondRepository =
+            JdbcScreeningRepository(
+                isLocal = false,
+                customUrl = fileUrl,
+                movieRepository = secondMovieRepository,
+                reservationRepository = secondReservationRepository,
+            )
         val statuses = secondRepository.seatStatusesOf("남은 인생 10년", date, startTime)
 
         assertThat(seatStatusOf(statuses, reservedSeat)).isEqualTo(SeatStatus.RESERVED)
