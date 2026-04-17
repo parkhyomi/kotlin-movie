@@ -36,7 +36,7 @@ class CinemaControllerTest {
     }
 
     @Test
-    fun `reservationSummaries는 예약된 항목을 장바구니 출력 형식으로 반환한다`() {
+    fun `reservationItems는 예약된 항목을 반환한다`() {
         val controller =
             controllerWithScreenings(
                 screenings =
@@ -49,12 +49,14 @@ class CinemaControllerTest {
         controller.reserve("탑건: 매버릭", LocalDate.of(2026, 4, 10), LocalTime.of(13, 0), listOf("C2", "C3"))
         controller.reserve("마더", LocalDate.of(2026, 4, 10), LocalTime.of(16, 0), listOf("E2"))
 
-        val summaries = controller.reservationSummaries()
+        val items = controller.reservationItems()
 
         assertAll(
-            { assertThat(summaries).hasSize(2) },
-            { assertThat(summaries[0]).isEqualTo("- [탑건: 매버릭] 2026-04-10 13:00  좌석: C2, C3") },
-            { assertThat(summaries[1]).isEqualTo("- [마더] 2026-04-10 16:00  좌석: E2") },
+            { assertThat(items).hasSize(2) },
+            { assertThat(items[0].screening.movie.findMovieTitle()).isEqualTo("탑건: 매버릭") },
+            { assertThat(items[0].seats.map { seat -> "${seat.row.name}${seat.column}" }).containsExactly("C2", "C3") },
+            { assertThat(items[1].screening.movie.findMovieTitle()).isEqualTo("마더") },
+            { assertThat(items[1].seats.map { seat -> "${seat.row.name}${seat.column}" }).containsExactly("E2") },
         )
     }
 

@@ -48,7 +48,7 @@ fun cinema(
         }
     }
 
-    outView.showCart(cinemaController.reservationSummaries())
+    outView.showCart(cinemaController.reservationItems())
 
     val point = inputView.readPoint()
     val paymentMethod = inputView.readPaymentMethod()
@@ -60,7 +60,7 @@ fun cinema(
     }
 
     outView.showReservationCompleted(
-        summaries = cinemaController.reservationSummaries(),
+        items = cinemaController.reservationItems(),
         resultPrice = resultPrice,
         point = point,
     )

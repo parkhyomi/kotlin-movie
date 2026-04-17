@@ -20,10 +20,10 @@ class OutView {
         println()
     }
 
-    fun showCart(summaries: List<String>) {
+    fun showCart(items: List<CartItem>) {
         println("장바구니")
-        summaries.forEach { summary ->
-            println(summary)
+        items.forEach { item ->
+            println(ReservationFormatter.format(item))
         }
     }
 
@@ -33,13 +33,13 @@ class OutView {
     }
 
     fun showReservationCompleted(
-        summaries: List<String>,
+        items: List<CartItem>,
         resultPrice: Int,
         point: Int,
     ) {
         println("예매 완료")
-        summaries.forEach { summary ->
-            println(summary)
+        items.forEach { item ->
+            println(ReservationFormatter.format(item))
         }
         println("결제 금액: $resultPrice  (포인트 ${point}원 사용)")
     }

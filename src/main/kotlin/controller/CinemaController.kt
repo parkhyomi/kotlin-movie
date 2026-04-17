@@ -15,7 +15,6 @@ class CinemaController(
     private val paymentCalculator: PaymentCalculator = PaymentCalculator(),
     private val cart: Cart = Cart(),
     private val seatCodeParser: DefaultSeatCodeParser = DefaultSeatCodeParser(),
-    private val reservationSummaryFormatter: DefaultReservationSummaryFormatter = DefaultReservationSummaryFormatter(),
 ) {
     fun findScreeningTitle(title: String): List<Screening> = screeningRepository.screeningsOfMovieTitle(title)
 
@@ -55,10 +54,7 @@ class CinemaController(
 
     fun hasOverlapping(screening: Screening): Boolean = cart.hasOverlapping(screening)
 
-    fun reservationSummaries(): List<String> =
-        cart.items().map { item ->
-            reservationSummaryFormatter.format(item)
-        }
+    fun reservationItems(): List<CartItem> = cart.items()
 
     fun payAmountApply(
         point: Int,
